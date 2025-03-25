@@ -7,7 +7,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 export default function Button({ children , className , width , ...rest }: ButtonProps) {
   return (
-    <button className={` ${className} ${width} p-3 rounded-md  `} {...rest}> 
+    <button className={` ${className} ${width} p-2 rounded-md  `} {...rest}> 
         {children}
     </button>
   )
