@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { FormEvent, MouseEvent, useState } from 'react'
 import ProductCard from './components/ProductCard'
 import {inputeModel, ProductList} from './components/data/ProductList'
 import Modal from './components/ui/modal'
@@ -7,8 +7,7 @@ import FormInpute from '../src/components/ui/Inpute'
 import { IProduct } from './components/interface'
 
 function App() {
-    const [isOpen, setIsOpen] = useState(false)
-    const [product , setProduct] = useState<IProduct>({
+    const dataObject = {
       title : '',
       description : '',
       imgurl : '',
@@ -18,7 +17,9 @@ function App() {
         name : '',
         imgurl :'',
       }
-    })
+    }
+    const [isOpen, setIsOpen] = useState(false)
+    const [product , setProduct] = useState<IProduct>(dataObject)
 
 
     //**TODO */ _____________ Modal handler _____________
@@ -59,6 +60,20 @@ function App() {
   console.log(product);
   
 
+  function submitedHandler(event: FormEvent<HTMLFormElement>): void {
+    event.preventDefault();
+  }
+
+  function displayProductHandler(): void {
+    console.log(product);
+    
+  }
+
+  function cancelHandler(): void {
+    setProduct(dataObject);
+    closeModal();
+  }
+
   return (
     <div className='container mx-auto'>
       <Button width='w-full' className='bg-indigo-700 text-white font-bold' onClick={openModal}>Add Product</Button>
@@ -68,11 +83,11 @@ function App() {
       
         <Modal isOpen={isOpen} closeModal={closeModal} title="Edite product"  >
         <div className='flex flex-col space-x-2 space-y-2'>
-          <div className='space-y-4'>
-          {renderFormInput}
-          <Button width='w-full' className='bg-indigo-700 text-white font-bold'>submited</Button>
-          <Button width='w-full' className='bg-gray-300 hover:bg-gray-600 text-white font-bold ease-in duration-300'>Cancel</Button>
-          </div>
+          <form className='space-y-4' onSubmit={submitedHandler}>
+            {renderFormInput}
+            <Button width='w-full' className='bg-indigo-700 text-white font-bold' onClick={displayProductHandler}>submited</Button>
+            <Button width='w-full' className='bg-gray-300 hover:bg-gray-600 text-white font-bold ease-in duration-300' onClick={cancelHandler}>Cancel</Button>
+          </form>
          
         </div>
         </Modal>
