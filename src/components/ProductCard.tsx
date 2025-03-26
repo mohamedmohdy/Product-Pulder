@@ -23,9 +23,12 @@ export default function ProductCard({product}: ProductCardProps) {
          </div>
          <div className="flex justify-between items-center my-2">
             <span className="text-indigo-700 font-bold ">{price}</span>
-             <Image imageUrl={catogry.imgurl}
+            <div className="flex items-center space-x-2">
+            <Image imageUrl={catogry.imgurl}
              alt={catogry.name}
              className="w-10 h-10 rounded-full"/>
+             <span className="pr-2">{catogry.name}</span>
+            </div>
          </div>
          <div className="flex space-x-2 text-white text-lg">
             <Button className="bg-indigo-700" width="w-full">Edite</Button>
