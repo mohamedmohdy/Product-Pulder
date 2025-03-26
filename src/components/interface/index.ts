@@ -1,5 +1,5 @@
 export interface IProduct {
-    id : string | undefined,
+    id? : string | undefined,
     title : string,
     description : string,
     imgurl : string,
@@ -13,7 +13,7 @@ export interface IProduct {
 
 export interface IinputeModel {
     id : string ,
-    name : string,
+    name : "title" | "description" | "imgurl" | "price" ,
     label : string,
     type : string,
 }

@@ -191,7 +191,7 @@ export const inputeModel : IinputeModel[] = [
     {
         id : "image",
         label : "product image url",
-        name : "image url",
+        name : "imgurl",
         type : "text"
     },
     {
