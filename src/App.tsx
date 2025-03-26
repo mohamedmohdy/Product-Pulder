@@ -1,14 +1,15 @@
 import { useState } from 'react'
 import ProductCard from './components/ProductCard'
-import {ProductList} from './components/data/ProductList'
+import {inputeModel, ProductList} from './components/data/ProductList'
 import Modal from './components/ui/modal'
 import Button from './components/Button'
+import { Input } from '@headlessui/react'
 
 function App() {
     let [isOpen, setIsOpen] = useState(false)
 
 
-    // _____________ Modal handler _____________
+    //**TODO */ _____________ Modal handler _____________
   
     function closeModal() {
       setIsOpen(false)
@@ -18,10 +19,20 @@ function App() {
       setIsOpen(true)
     }
 
+    //**TODO */ _____________ rendering _____________
+
   const renderProductList = ProductList.map((product) => {
     return (
     <ProductCard key={product.id} product={product} />
   )
+  })
+  const renderFormInput = inputeModel.map((inpute)=>{
+    return(
+      <div className='flex flex-col space-y-2' key={inpute.id}>
+        <label htmlFor={inpute.id}>{inpute.label}</label>
+        <Input id={inpute.id} name={inpute.name} type={inpute.type} />
+      </div>
+    )
   })
 
   return (
@@ -32,7 +43,8 @@ function App() {
       </div>
       
         <Modal isOpen={isOpen} closeModal={closeModal} title="Edite product"  >
-        <div className='flex space-x-2'>
+        <div className='flex flex-col space-x-2 space-y-2'>
+          {renderFormInput}
           <Button width='w-full' className='bg-indigo-700 text-white font-bold'>submited</Button>
           <Button width='w-full' className='bg-gray-300 hover:bg-gray-600 text-white font-bold ease-in duration-300'>Cancel</Button>
         </div>

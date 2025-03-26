@@ -10,3 +10,10 @@ export interface IProduct {
         imgurl : string,
     }
 }
+
+export interface IinputeModel {
+    id : string ,
+    name : string,
+    label : string,
+    type : string,
+}

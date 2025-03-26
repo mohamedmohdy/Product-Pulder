@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { IProduct } from '../interface';
+import { IinputeModel, IProduct } from '../interface';
 
 
 
@@ -173,4 +173,31 @@ export const ProductList : IProduct[] = [
         }
    }
 
+]
+
+export const inputeModel : IinputeModel[] = [
+    {
+        id : "title",
+        label : "productTitle",
+        name : "title",
+        type : "text"
+    },
+    {
+        id : "description",
+        label : "productDescription",
+        name : "description",
+        type : "text"
+    },
+    {
+        id : "image",
+        label : "product image url",
+        name : "image url",
+        type : "text"
+    },
+    {
+        id : "price",
+        label : "product price",
+        name : "price",
+        type : "text"
+    }
 ]
