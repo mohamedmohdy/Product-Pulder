@@ -1,10 +1,11 @@
-import React, { FormEvent, MouseEvent, useState } from 'react'
+import React, { FormEvent, useState } from 'react'
 import ProductCard from './components/ProductCard'
 import {inputeModel, ProductList} from './components/data/ProductList'
 import Modal from './components/ui/modal'
 import Button from './components/Button'
 import FormInpute from '../src/components/ui/Inpute'
 import { IProduct } from './components/interface'
+import { productValidation } from './validation'
 
 function App() {
     const dataObject = {
@@ -18,6 +19,9 @@ function App() {
         imgurl :'',
       }
     }
+
+     //**TODO */ _____________ states _____________
+
     const [isOpen, setIsOpen] = useState(false)
     const [product , setProduct] = useState<IProduct>(dataObject)
 
@@ -31,8 +35,9 @@ function App() {
     function openModal() {
       setIsOpen(true)
     }
+    //**TODO */ _____________ Modal handler _____________
 
-    //**TODO */ _____________ inpute handler _____________
+    //**TODO */ _____________  handler _____________
 
     function onchangehandler(e:React.ChangeEvent<HTMLInputElement>){
       setProduct({
@@ -40,6 +45,24 @@ function App() {
         [e.target.name] : e.target.value
       })   
     }
+
+    function submitedHandler(event: FormEvent<HTMLFormElement>): void {
+      event.preventDefault();
+      const errors = productValidation({imgurl: product.imgurl, title: product.title, description: product.description, price: product.price})
+      console.log(errors);
+      
+    }
+  
+    function displayProductHandler(): void {
+      console.log(product);
+      
+    }
+  
+    function cancelHandler(): void {
+      setProduct(dataObject);
+      closeModal();
+    }
+    //**TODO */ _____________  handler _____________
 
     //**TODO */ _____________ rendering _____________
 
@@ -56,23 +79,12 @@ function App() {
       </div>
     )
   })
+  //**TODO */ _____________ rendering _____________
 
   console.log(product);
   
 
-  function submitedHandler(event: FormEvent<HTMLFormElement>): void {
-    event.preventDefault();
-  }
-
-  function displayProductHandler(): void {
-    console.log(product);
-    
-  }
-
-  function cancelHandler(): void {
-    setProduct(dataObject);
-    closeModal();
-  }
+ 
 
   return (
     <div className='container mx-auto'>
