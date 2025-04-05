@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react'
+import React, { FormEvent, useLayoutEffect, useState } from 'react'
 import ProductCard from './components/ProductCard'
 import {inputeModel, ProductList} from './components/data/ProductList'
 import Modal from './components/ui/modal'
@@ -6,6 +6,7 @@ import Button from './components/Button'
 import FormInpute from '../src/components/ui/Inpute'
 import { IProduct } from './components/interface'
 import { productValidation } from './validation'
+import Errors from './components/Errors'
 
 function App() {
     const dataObject = {
@@ -24,6 +25,12 @@ function App() {
 
     const [isOpen, setIsOpen] = useState(false)
     const [product , setProduct] = useState<IProduct>(dataObject)
+    const [formErrors, setFormErrors] = useState({
+      title : '',
+      description : '',
+      imgurl : '',
+      price : ''
+    })
 
 
     //**TODO */ _____________ Modal handler _____________
@@ -43,13 +50,26 @@ function App() {
       setProduct({
         ...product ,
         [e.target.name] : e.target.value
-      })   
+      })  
+      setFormErrors({
+        ...formErrors,
+        [e.target.name] : ""
+      }) 
     }
 
     function submitedHandler(event: FormEvent<HTMLFormElement>): void {
       event.preventDefault();
       const errors = productValidation({imgurl: product.imgurl, title: product.title, description: product.description, price: product.price})
       console.log(errors);
+
+      const hasErrorsMsg = Object.values(errors).some((value) => value !== '');
+      if (hasErrorsMsg) {
+          setFormErrors(errors);
+          return;
+      }
+
+      console.log("data is ready to send a srever");
+      
       
     }
   
@@ -76,6 +96,7 @@ function App() {
       <div className='flex flex-col space-y-2' key={inpute.id}>
         <label htmlFor={inpute.id}>{inpute.label}</label>
         <FormInpute id={inpute.id} name={inpute.name} type={inpute.type} value={product[inpute.name]} onChange={onchangehandler} />
+        {formErrors[inpute.name] && <Errors MSG={formErrors[inpute.name]} />}
       </div>
     )
   })

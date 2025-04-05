@@ -6,7 +6,7 @@ export const productValidation = (IProduct: {title: string ; description: string
         price : ""
     } 
 
-    const regularImage = /^ftb.*?<img\s+[^>]*src=["'](https?|ftp|ftb):\/\//.test(IProduct.imgurl);
+    const regularImage = /^(https?|ftp|ftb):\/\//.test(IProduct.imgurl);
 
 
     if(!IProduct.title.trim() || IProduct.title.length <  10 || IProduct.title.length > 50){
