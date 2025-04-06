@@ -201,3 +201,14 @@ export const inputeModel : IinputeModel[] = [
         type : "text"
     }
 ]
+
+export const colors :string[] =[
+    "#f9a8ae",
+    "#fca5a1",
+    "#f87171",
+    "#ef4444",
+    "#dc2626",
+    "#b91c1c",
+    "#991b1b",
+    "#7f1d1d",
+]

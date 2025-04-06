@@ -1,12 +1,13 @@
 import React, { FormEvent, useLayoutEffect, useState } from 'react'
 import ProductCard from './components/ProductCard'
-import {inputeModel, ProductList} from './components/data/ProductList'
+import {colors, inputeModel, ProductList} from './components/data/ProductList'
 import Modal from './components/ui/modal'
 import Button from './components/Button'
 import FormInpute from '../src/components/ui/Inpute'
 import { IProduct } from './components/interface'
 import { productValidation } from './validation'
 import Errors from './components/Errors'
+import CircleColors from './components/ui/CircleColors'
 
 function App() {
     const dataObject = {
@@ -100,6 +101,8 @@ function App() {
       </div>
     )
   })
+
+  const renderColors = colors.map((colors)=> <CircleColors color={colors} key={colors} />)
   //**TODO */ _____________ rendering _____________
 
   console.log(product);
@@ -108,26 +111,42 @@ function App() {
  
 
   return (
-    <div className='container mx-auto'>
-      <Button width='w-full' className='bg-indigo-700 text-white font-bold' onClick={openModal}>Add Product</Button>
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6 border-2 '>
-       {renderProductList}
+    <div className="container mx-auto">
+      <Button
+        width="w-full"
+        className="bg-indigo-700 text-white font-bold"
+        onClick={openModal}
+      >
+        Add Product
+      </Button>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6 border-2 ">
+        {renderProductList}
       </div>
-      
-        <Modal isOpen={isOpen} closeModal={closeModal} title="Edite product"  >
-        <div className='flex flex-col space-x-2 space-y-2'>
-          <form className='space-y-4' onSubmit={submitedHandler}>
+
+      <Modal isOpen={isOpen} closeModal={closeModal} title="Edite product">
+        <div className="flex flex-col space-x-2 space-y-2">
+          <form className="space-y-4" onSubmit={submitedHandler}>
             {renderFormInput}
-            <Button width='w-full' className='bg-indigo-700 text-white font-bold' onClick={displayProductHandler}>submited</Button>
-            <Button width='w-full' className='bg-gray-300 hover:bg-gray-600 text-white font-bold ease-in duration-300' onClick={cancelHandler}>Cancel</Button>
+            <div className="flex space-x-2 my-2">{renderColors}</div>
+            <Button
+              width="w-full"
+              className="bg-indigo-700 text-white font-bold"
+              onClick={displayProductHandler}
+            >
+              submited
+            </Button>
+            <Button
+              width="w-full"
+              className="bg-gray-300 hover:bg-gray-600 text-white font-bold ease-in duration-300"
+              onClick={cancelHandler}
+            >
+              Cancel
+            </Button>
           </form>
-         
         </div>
-        </Modal>
-      
-      
+      </Modal>
     </div>
-  )
+  );
 }
 
 export default App
