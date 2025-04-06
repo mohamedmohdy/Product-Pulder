@@ -32,6 +32,10 @@ function App() {
       imgurl : '',
       price : ''
     })
+    const [temp , setTemp] = useState<string[]>([]) //**Todo store date in aray ---> tecnec store prev data */
+    console.log(temp);
+    
+    
 
 
     //**TODO */ _____________ Modal handler _____________
@@ -102,10 +106,12 @@ function App() {
     )
   })
 
-  const renderColors = colors.map((colors)=> <CircleColors color={colors} key={colors} />)
+  const renderColors = colors.map((colors)=> 
+  <CircleColors color={colors} key={colors} onClick={()=> setTemp((prev)=>[...prev , colors])}/> //**todo state can return functions */
+)
   //**TODO */ _____________ rendering _____________
 
-  console.log(product);
+  
   
 
  
@@ -127,7 +133,7 @@ function App() {
         <div className="flex flex-col space-x-2 space-y-2">
           <form className="space-y-4" onSubmit={submitedHandler}>
             {renderFormInput}
-            <div className="flex space-x-2 my-2">{renderColors}</div>
+            <div className="flex space-x-2 my-2" >{renderColors}</div>
             <Button
               width="w-full"
               className="bg-indigo-700 text-white font-bold"
