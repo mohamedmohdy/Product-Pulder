@@ -1,120 +1,132 @@
-import React, { FormEvent, useLayoutEffect, useState } from 'react'
-import ProductCard from './components/ProductCard'
-import {colors, inputeModel, ProductList} from './components/data/ProductList'
-import Modal from './components/ui/modal'
-import Button from './components/Button'
-import FormInpute from '../src/components/ui/Inpute'
-import { IProduct } from './components/interface'
-import { productValidation } from './validation'
-import Errors from './components/Errors'
-import CircleColors from './components/ui/CircleColors'
+import React, { FormEvent, useLayoutEffect, useState } from "react";
+import ProductCard from "./components/ProductCard";
+import {
+  colors,
+  inputeModel,
+  ProductList,
+} from "./components/data/ProductList";
+import Modal from "./components/ui/modal";
+import Button from "./components/Button";
+import FormInpute from "../src/components/ui/Inpute";
+import { IProduct } from "./components/interface";
+import { productValidation } from "./validation";
+import Errors from "./components/Errors";
+import CircleColors from "./components/ui/CircleColors";
 
 function App() {
-    const dataObject = {
-      title : '',
-      description : '',
-      imgurl : '',
-      price : '',
-      colors : [],
-      catogry : {
-        name : '',
-        imgurl :'',
-      }
+  const dataObject = {
+    title: "",
+    description: "",
+    imgurl: "",
+    price: "",
+    colors: [],
+    catogry: {
+      name: "",
+      imgurl: "",
+    },
+  };
+
+  //**TODO */ _____________ states _____________
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [product, setProduct] = useState<IProduct>(dataObject);
+  const [formErrors, setFormErrors] = useState({
+    title: "",
+    description: "",
+    imgurl: "",
+    price: "",
+  });
+  const [temp, setTemp] = useState<string[]>([]); //**Todo store date in aray ---> tecnec store prev data */
+  console.log(temp);
+
+  //**TODO */ _____________ Modal handler _____________
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  function openModal() {
+    setIsOpen(true);
+  }
+  //**TODO */ _____________ Modal handler _____________
+
+  //**TODO */ _____________  handler _____________
+
+  function onchangehandler(e: React.ChangeEvent<HTMLInputElement>) {
+    setProduct({
+      ...product,
+      [e.target.name]: e.target.value,
+    });
+    setFormErrors({
+      ...formErrors,
+      [e.target.name]: "",
+    });
+  }
+
+  function submitedHandler(event: FormEvent<HTMLFormElement>): void {
+    event.preventDefault();
+    const errors = productValidation({
+      imgurl: product.imgurl,
+      title: product.title,
+      description: product.description,
+      price: product.price,
+    });
+    console.log(errors);
+
+    const hasErrorsMsg = Object.values(errors).some((value) => value !== "");
+    if (hasErrorsMsg) {
+      setFormErrors(errors);
+      return;
     }
 
-     //**TODO */ _____________ states _____________
+    console.log("data is ready to send a srever");
+  }
 
-    const [isOpen, setIsOpen] = useState(false)
-    const [product , setProduct] = useState<IProduct>(dataObject)
-    const [formErrors, setFormErrors] = useState({
-      title : '',
-      description : '',
-      imgurl : '',
-      price : ''
-    })
-    const [temp , setTemp] = useState<string[]>([]) //**Todo store date in aray ---> tecnec store prev data */
-    console.log(temp);
-    
-    
+  function displayProductHandler(): void {
+    console.log(product);
+  }
 
+  function cancelHandler(): void {
+    setProduct(dataObject);
+    closeModal();
+  }
+  //**TODO */ _____________  handler _____________
 
-    //**TODO */ _____________ Modal handler _____________
-  
-    function closeModal() {
-      setIsOpen(false)
-    }
-  
-    function openModal() {
-      setIsOpen(true)
-    }
-    //**TODO */ _____________ Modal handler _____________
-
-    //**TODO */ _____________  handler _____________
-
-    function onchangehandler(e:React.ChangeEvent<HTMLInputElement>){
-      setProduct({
-        ...product ,
-        [e.target.name] : e.target.value
-      })  
-      setFormErrors({
-        ...formErrors,
-        [e.target.name] : ""
-      }) 
-    }
-
-    function submitedHandler(event: FormEvent<HTMLFormElement>): void {
-      event.preventDefault();
-      const errors = productValidation({imgurl: product.imgurl, title: product.title, description: product.description, price: product.price})
-      console.log(errors);
-
-      const hasErrorsMsg = Object.values(errors).some((value) => value !== '');
-      if (hasErrorsMsg) {
-          setFormErrors(errors);
-          return;
-      }
-
-      console.log("data is ready to send a srever");
-      
-      
-    }
-  
-    function displayProductHandler(): void {
-      console.log(product);
-      
-    }
-  
-    function cancelHandler(): void {
-      setProduct(dataObject);
-      closeModal();
-    }
-    //**TODO */ _____________  handler _____________
-
-    //**TODO */ _____________ rendering _____________
-
-  const renderProductList = ProductList.map((product) => {
-    return (
-    <ProductCard key={product.id} product={product} />
-  )
-  })
-  const renderFormInput = inputeModel.map((inpute)=>{
-    return(
-      <div className='flex flex-col space-y-2' key={inpute.id}>
-        <label htmlFor={inpute.id}>{inpute.label}</label>
-        <FormInpute id={inpute.id} name={inpute.name} type={inpute.type} value={product[inpute.name]} onChange={onchangehandler} />
-        {formErrors[inpute.name] && <Errors MSG={formErrors[inpute.name]} />}
-      </div>
-    )
-  })
-
-  const renderColors = colors.map((colors)=> 
-  <CircleColors color={colors} key={colors} onClick={()=> setTemp((prev)=>[...prev , colors])}/> //**todo state can return functions */
-)
   //**TODO */ _____________ rendering _____________
 
-  
-  
+  const renderProductList = ProductList.map((product) => {
+    return <ProductCard key={product.id} product={product} />;
+  });
+  const renderFormInput = inputeModel.map((inpute) => {
+    return (
+      <div className="flex flex-col space-y-2" key={inpute.id}>
+        <label htmlFor={inpute.id}>{inpute.label}</label>
+        <FormInpute
+          id={inpute.id}
+          name={inpute.name}
+          type={inpute.type}
+          value={product[inpute.name]}
+          onChange={onchangehandler}
+        />
+        {formErrors[inpute.name] && <Errors MSG={formErrors[inpute.name]} />}
+      </div>
+    );
+  });
 
- 
+  const renderColors = colors.map((colors) => (
+    <CircleColors
+      color={colors}
+      key={colors}
+      onClick={() => {
+        if (temp.includes(colors)) {
+          setTemp((prev) => prev.filter((item) => item !== colors)); //**TODO DELET COLOR IN TEMP */
+          return;
+        }
+        setTemp((prev) => [...prev, colors]); //**todo state can return functions */
+      }}
+    />
+  ));
+  //**TODO */ _____________ rendering _____________
 
   return (
     <div className="container mx-auto">
@@ -133,7 +145,19 @@ function App() {
         <div className="flex flex-col space-x-2 space-y-2">
           <form className="space-y-4" onSubmit={submitedHandler}>
             {renderFormInput}
-            <div className="flex space-x-2 my-2" >{renderColors}</div>
+            <div className="flex  space-x-3 pb-2">{renderColors}</div>
+            <div className="flex flex-wrap ">
+              {temp.map((colors) => (
+                <span
+                  className=" space-x-1 mr-2 p-1 m-1  rounded-md"
+                  key={colors}
+                  style={{ backgroundColor: colors, color: "white" }}
+                >
+                  {colors}
+                </span>
+              ))}
+            </div>
+
             <Button
               width="w-full"
               className="bg-indigo-700 text-white font-bold"
@@ -155,4 +179,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
