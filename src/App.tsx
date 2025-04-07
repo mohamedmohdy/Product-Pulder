@@ -1,4 +1,5 @@
 import React, { FormEvent, useLayoutEffect, useState } from "react";
+import { v4 as uuid } from 'uuid';
 import ProductCard from "./components/ProductCard";
 import {
   colors,
@@ -29,6 +30,7 @@ function App() {
   //**TODO */ _____________ states _____________
 
   const [isOpen, setIsOpen] = useState(false);
+  const [products, setProducts] = useState<IProduct[]>(ProductList);
   const [product, setProduct] = useState<IProduct>(dataObject);
   const [formErrors, setFormErrors] = useState({
     title: "",
@@ -79,7 +81,12 @@ function App() {
       return;
     }
 
-    console.log("data is ready to send a srever");
+    setProducts((pre)=>[ {...product,id: uuid(), colors: temp} , ...pre,]);
+    console.log(product);
+
+    setProduct(dataObject);
+    closeModal();
+    
   }
 
   function displayProductHandler(): void {
@@ -94,7 +101,7 @@ function App() {
 
   //**TODO */ _____________ rendering _____________
 
-  const renderProductList = ProductList.map((product) => {
+  const renderProductList = products.map((product) => {
     return <ProductCard key={product.id} product={product} />;
   });
   const renderFormInput = inputeModel.map((inpute) => {
