@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { IinputeModel, IProduct } from '../interface';
+import { IinputeModel, IProduct, ISelectModel } from '../interface';
 
 
 
@@ -276,4 +276,30 @@ export const colors :string[] =[
     "#b91c1c",
     "#991b1b",
     "#7f1d1d",
+]
+
+export const catogry : ISelectModel[]  =[
+    {
+        id : uuid(),
+        name : "nike",
+        imageURL : "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+
+    },{
+        id : uuid(),
+        name : "adidas",
+        imageURL : "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+    },{
+        id:uuid(),
+        name:"puma",
+        imageURL:"https://images.unsplash.com/photo-1583121274602-3e2820c69888?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+    },{
+        id:uuid(),
+        name:"clothing",
+        imageURL:"https://images.unsplash.com/photo-1583121274602-3e2820c69888?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+    },{
+        id : uuid(),
+        name : "shoes",
+        imageURL : "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+    }
+   
 ]

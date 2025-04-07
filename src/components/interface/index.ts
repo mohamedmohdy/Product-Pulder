@@ -17,3 +17,9 @@ export interface IinputeModel {
     label : string,
     type : string,
 }
+
+export interface ISelectModel {
+    id : string,
+    name : string,
+    imageURL : string,
+}

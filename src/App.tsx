@@ -13,6 +13,7 @@ import { IProduct } from "./components/interface";
 import { productValidation } from "./validation";
 import Errors from "./components/Errors";
 import CircleColors from "./components/ui/CircleColors";
+import SelectMenu from "./components/ui/SelectMenue";
 
 function App() {
   const dataObject = {
@@ -152,6 +153,7 @@ function App() {
         <div className="flex flex-col space-x-2 space-y-2">
           <form className="space-y-4" onSubmit={submitedHandler}>
             {renderFormInput}
+            <SelectMenu/>
             <div className="flex  space-x-3 pb-2">{renderColors}</div>
             <div className="flex flex-wrap ">
               {temp.map((colors) => (
@@ -164,6 +166,7 @@ function App() {
                 </span>
               ))}
             </div>
+            
 
             <Button
               width="w-full"
