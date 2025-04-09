@@ -2,6 +2,7 @@ import React, { FormEvent, useLayoutEffect, useState } from "react";
 import { v4 as uuid } from 'uuid';
 import ProductCard from "./components/ProductCard";
 import {
+  catogry,
   colors,
   inputeModel,
   ProductList,
@@ -31,6 +32,9 @@ function App() {
   //**TODO */ _____________ states _____________
 
   const [isOpen, setIsOpen] = useState(false);
+  // **! created new model to EDite product */
+  const [isOpenEditeModel, setisOpenEditeModel] = useState(false);
+  // **! created new model to EDite product */
   const [products, setProducts] = useState<IProduct[]>(ProductList);
   const [product, setProduct] = useState<IProduct>(dataObject);
   const [formErrors, setFormErrors] = useState({
@@ -39,17 +43,28 @@ function App() {
     imgurl: "",
     price: "",
   });
+  const [selected, setSelected] = useState(catogry[0])
+  const [ProductToEdite , setProductToEdite] = useState<IProduct>(dataObject) 
   const [temp, setTemp] = useState<string[]>([]); //**Todo store date in aray ---> tecnec store prev data */
   console.log(temp);
 
   //**TODO */ _____________ Modal handler _____________
-
+  //! functions add product modal  
   function closeModal() {
     setIsOpen(false);
   }
 
   function openModal() {
     setIsOpen(true);
+  }
+
+  //!function edite product modal
+  function closeEditeModal() {
+    setisOpenEditeModel(false);
+  }
+
+  function openEditeModal() {
+    setisOpenEditeModel(true);
   }
   //**TODO */ _____________ Modal handler _____________
 
@@ -82,7 +97,7 @@ function App() {
       return;
     }
 
-    setProducts((pre)=>[ {...product,id: uuid(), colors: temp} , ...pre,]);
+    setProducts((pre)=>[ {...product,id: uuid(), colors: temp , catogry : selected } , ...pre]);
     console.log(product);
 
     setProduct(dataObject);
@@ -103,7 +118,7 @@ function App() {
   //**TODO */ _____________ rendering _____________
 
   const renderProductList = products.map((product) => {
-    return <ProductCard key={product.id} product={product} />;
+    return <ProductCard key={product.id} product={product} setProductToEdite={setProductToEdite} openEditeModal={openEditeModal} />;
   });
   const renderFormInput = inputeModel.map((inpute) => {
     return (
@@ -149,11 +164,50 @@ function App() {
         {renderProductList}
       </div>
 
-      <Modal isOpen={isOpen} closeModal={closeModal} title="Edite product">
+      {/* Add product model */}
+      <Modal isOpen={isOpen} closeModal={closeModal} title="Add new product">
         <div className="flex flex-col space-x-2 space-y-2">
           <form className="space-y-4" onSubmit={submitedHandler}>
             {renderFormInput}
-            <SelectMenu/>
+            <SelectMenu selected={selected }  setSelected={setSelected } />
+            <div className="flex  space-x-3 pb-2">{renderColors}</div>
+            <div className="flex flex-wrap ">
+              {temp.map((colors) => (
+                <span
+                  className=" space-x-1 mr-2 p-1 m-1  rounded-md"
+                  key={colors}
+                  style={{ backgroundColor: colors, color: "white" }}
+                >
+                  {colors}
+                </span>
+              ))}
+            </div>
+            
+
+            <Button
+              width="w-full"
+              className="bg-indigo-700 text-white font-bold"
+              onClick={displayProductHandler}
+            >
+              submited
+            </Button>
+            <Button
+              width="w-full"
+              className="bg-gray-300 hover:bg-gray-600 text-white font-bold ease-in duration-300"
+              onClick={cancelHandler}
+            >
+              Cancel
+            </Button>
+          </form>
+        </div>
+      </Modal>
+
+      {/* Edite product model */}
+      <Modal isOpen={isOpenEditeModel} closeModal={closeEditeModal} title="Edite product">
+        <div className="flex flex-col space-x-2 space-y-2">
+          <form className="space-y-4" onSubmit={submitedHandler}>
+            {renderFormInput}
+            <SelectMenu selected={selected }  setSelected={setSelected } />
             <div className="flex  space-x-3 pb-2">{renderColors}</div>
             <div className="flex flex-wrap ">
               {temp.map((colors) => (

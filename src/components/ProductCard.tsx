@@ -4,12 +4,14 @@ import { IProduct } from "./interface"
 import CircleColors from "./ui/CircleColors";
 import { textSlice } from "./utilities/functions";
 interface ProductCardProps {
-    product : IProduct
+    product : IProduct,
+    setProductToEdite : (product : IProduct) => void,
+    openEditeModal : () => void,
 }
 
-export default function ProductCard({product}: ProductCardProps) {
+export default function ProductCard({product , setProductToEdite , openEditeModal }: ProductCardProps) {
 
-    const {title , description , price , catogry , colors } = product ;
+    const {title , description , price , catogry , colors  } = product ;
 
       const renderColors = colors.map((colors) => (
         <CircleColors
@@ -19,6 +21,12 @@ export default function ProductCard({product}: ProductCardProps) {
         
       ));
       console.log(colors);
+
+      const onEdite =()=>{
+        setProductToEdite(product)
+        openEditeModal()
+        
+      }
   return (
     <div className="max-w-sm lg:max-w-lg mx-auto md:mx-0 border">
          <Image imageUrl={product.imgurl}
@@ -37,7 +45,7 @@ export default function ProductCard({product}: ProductCardProps) {
             </div>
          </div>
          <div className="flex space-x-2 text-white text-lg">
-            <Button className="bg-indigo-700" width="w-full">Edite</Button>
+            <Button className="bg-indigo-700" width="w-full" onClick={onEdite}>Edite</Button>
             <Button className="bg-red-800" width="w-full">remove</Button>
          </div>
          

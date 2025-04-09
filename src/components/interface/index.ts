@@ -21,5 +21,5 @@ export interface IinputeModel {
 export interface ISelectModel {
     id : string,
     name : string,
-    imageURL : string,
+    imgurl : string,
 }

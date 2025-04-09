@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { IinputeModel, IProduct, ISelectModel } from '../interface';
+import { IinputeModel, IProduct } from '../interface';
 
 
 
@@ -38,9 +38,8 @@ export const ProductList : IProduct[] = [
             name : "nike",
             imgurl : "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
         }
-   }
-   ,
-    {
+   },
+   {
         id : uuid(),
         title : "2022 Genesis GV72",
         description : "As luxury brands go, South Korea’s Genesis is stil... As luxury brands go, South Korea’s Genesis is stil... As luxury brands go, South Korea’s Genesis is stil...", 
@@ -199,8 +198,7 @@ export const ProductList : IProduct[] = [
         catogry : {
             name : "nike",
             imgurl : "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-        }
-   }
+        }}
    ,
     {
         id : uuid(),
@@ -278,28 +276,28 @@ export const colors :string[] =[
     "#7f1d1d",
 ]
 
-export const catogry : ISelectModel[]  =[
+export const catogry  =[
     {
         id : uuid(),
         name : "nike",
-        imageURL : "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+        imgurl : "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
 
     },{
         id : uuid(),
         name : "adidas",
-        imageURL : "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+        imgurl : "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
     },{
         id:uuid(),
         name:"puma",
-        imageURL:"https://images.unsplash.com/photo-1583121274602-3e2820c69888?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+        imgurl:"https://images.unsplash.com/photo-1583121274602-3e2820c69888?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
     },{
         id:uuid(),
         name:"clothing",
-        imageURL:"https://images.unsplash.com/photo-1583121274602-3e2820c69888?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+        imgurl:"https://images.unsplash.com/photo-1583121274602-3e2820c69888?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
     },{
         id : uuid(),
-        name : "shoes",
-        imageURL : "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+        name : "nike",
+        imgurl : "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
     }
    
 ]
