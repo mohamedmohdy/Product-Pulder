@@ -15,6 +15,7 @@ import { productValidation } from "./validation";
 import Errors from "./components/Errors";
 import CircleColors from "./components/ui/CircleColors";
 import SelectMenu from "./components/ui/SelectMenue";
+import { TPproductName } from "./types";
 
 function App() {
   const dataObject = {
@@ -119,10 +120,10 @@ function App() {
   function submitedEditeHandler(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
     const errors = productValidation({
-      imgurl: product.imgurl,
-      title: product.title,
-      description: product.description,
-      price: product.price,
+      imgurl: ProductToEdite.imgurl,
+      title: ProductToEdite.title,
+      description: ProductToEdite.description,
+      price: ProductToEdite.price,
     });
     console.log(errors);
 
@@ -132,11 +133,10 @@ function App() {
       return;
     }
 
-    setProducts((pre)=>[ {...product,id: uuid(), colors: temp , catogry : selected } , ...pre]);
     console.log(product);
 
     setProduct(dataObject);
-    closeModal();
+    closeEditeModal() //!XXXXXX
     
   }
 
@@ -148,6 +148,13 @@ function App() {
     setProduct(dataObject);
     closeModal();
   }
+
+  function cancelEditeHandler(): void {
+    setProductToEdite(dataObject);
+    closeEditeModal();
+  }
+
+  
   //**TODO */ _____________  handler _____________
 
   //**TODO */ _____________ rendering _____________
@@ -184,6 +191,28 @@ function App() {
       }}
     />
   ));
+
+  const ReenderPeoductEditeWithError = (id : string , name : TPproductName , label : string)=>{
+    return(
+        <div className="flex flex-col space-y-2" >
+          <label 
+          htmlFor={id}
+          >
+            {label}
+            
+          </label>
+          <FormInpute
+            id={id}
+            name={name}
+            type={"text"}
+            value={ProductToEdite[name]}
+            onChange={onchangEditeehandler}
+          />
+          {<Errors MSG={""} />}
+      </div> 
+    )
+
+  }
   //**TODO */ _____________ rendering _____________
 
   return (
@@ -241,39 +270,11 @@ function App() {
       <Modal isOpen={isOpenEditeModel} closeModal={closeEditeModal} title="Edite product">
         <div className="flex flex-col space-x-2 space-y-2">
           <form className="space-y-4" onSubmit={submitedEditeHandler}>
-            <div className="flex flex-col space-y-2" >
-              <label 
-              htmlFor={"title"}
-              >
-                product title
-                
-              </label>
-              <FormInpute
-                id={"title"}
-                name={"title"}
-                type={"text"}
-                value={ProductToEdite['title']}
-                onChange={onchangEditeehandler}
-              />
-              {<Errors MSG={""} />}
-            </div>
-
-            <div className="flex flex-col space-y-2" >
-              <label 
-              htmlFor={"title"}
-              >
-                product Description
-                
-              </label>
-              <FormInpute
-                id={"Description"}
-                name={"Description"}
-                type={"text"}
-                value={ProductToEdite['description']}
-                onChange={onchangEditeehandler}
-              />
-              {<Errors MSG={""} />}
-            </div>
+           
+            {ReenderPeoductEditeWithError("title" , "title" , "product title")}
+            {ReenderPeoductEditeWithError("description" , "description" , "product description")}
+            {ReenderPeoductEditeWithError("imgurl" , "imgurl" , "img url")}
+            {ReenderPeoductEditeWithError("price" , "price" , "product price")}
             {/* {renderFormInput}
             <SelectMenu selected={selected }  setSelected={setSelected } />
             <div className="flex  space-x-3 pb-2">{renderColors}</div>
@@ -299,7 +300,7 @@ function App() {
             <Button
               width="w-full"
               className="bg-gray-300 hover:bg-gray-600 text-white font-bold ease-in duration-300"
-              onClick={cancelHandler}
+              onClick={cancelEditeHandler}
             >
               Cancel
             </Button>
