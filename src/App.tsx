@@ -81,7 +81,42 @@ function App() {
     });
   }
 
+  //!EDITE HANDLER 
+  function onchangEditeehandler(e: React.ChangeEvent<HTMLInputElement>) {
+    setProductToEdite({
+      ...ProductToEdite,
+      [e.target.name]: e.target.value,
+    });
+    setFormErrors({
+      ...formErrors,
+      [e.target.name]: "",
+    });
+  } 
+
   function submitedHandler(event: FormEvent<HTMLFormElement>): void {
+    event.preventDefault();
+    const errors = productValidation({
+      imgurl: product.imgurl,
+      title: product.title,
+      description: product.description,
+      price: product.price,
+    });
+    console.log(errors);
+
+    const hasErrorsMsg = Object.values(errors).some((value) => value !== "");
+    if (hasErrorsMsg) {
+      setFormErrors(errors);
+      return;
+    }
+
+    setProducts((pre)=>[ {...product,id: uuid(), colors: temp , catogry : selected } , ...pre]);
+    console.log(product);
+
+    setProduct(dataObject);
+    closeModal();
+    
+  }
+  function submitedEditeHandler(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
     const errors = productValidation({
       imgurl: product.imgurl,
@@ -205,8 +240,41 @@ function App() {
       {/* Edite product model */}
       <Modal isOpen={isOpenEditeModel} closeModal={closeEditeModal} title="Edite product">
         <div className="flex flex-col space-x-2 space-y-2">
-          <form className="space-y-4" onSubmit={submitedHandler}>
-            {renderFormInput}
+          <form className="space-y-4" onSubmit={submitedEditeHandler}>
+            <div className="flex flex-col space-y-2" >
+              <label 
+              htmlFor={"title"}
+              >
+                product title
+                
+              </label>
+              <FormInpute
+                id={"title"}
+                name={"title"}
+                type={"text"}
+                value={ProductToEdite['title']}
+                onChange={onchangEditeehandler}
+              />
+              {<Errors MSG={""} />}
+            </div>
+
+            <div className="flex flex-col space-y-2" >
+              <label 
+              htmlFor={"title"}
+              >
+                product Description
+                
+              </label>
+              <FormInpute
+                id={"Description"}
+                name={"Description"}
+                type={"text"}
+                value={ProductToEdite['description']}
+                onChange={onchangEditeehandler}
+              />
+              {<Errors MSG={""} />}
+            </div>
+            {/* {renderFormInput}
             <SelectMenu selected={selected }  setSelected={setSelected } />
             <div className="flex  space-x-3 pb-2">{renderColors}</div>
             <div className="flex flex-wrap ">
@@ -218,8 +286,7 @@ function App() {
                 >
                   {colors}
                 </span>
-              ))}
-            </div>
+              ))} */}
             
 
             <Button
