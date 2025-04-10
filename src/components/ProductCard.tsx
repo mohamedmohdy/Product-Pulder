@@ -7,9 +7,11 @@ interface ProductCardProps {
     product : IProduct,
     setProductToEdite : (product : IProduct) => void,
     openEditeModal : () => void,
+    setProductToEditeINDX : (value : number) => void,
+    index : number,
 }
 
-export default function ProductCard({product , setProductToEdite , openEditeModal }: ProductCardProps) {
+export default function ProductCard({product , setProductToEdite , openEditeModal , setProductToEditeINDX , index }: ProductCardProps) {
 
     const {title , description , price , catogry , colors  } = product ;
 
@@ -20,11 +22,13 @@ export default function ProductCard({product , setProductToEdite , openEditeModa
         />
         
       ));
-      console.log(colors);
+      
 
       const onEdite =()=>{
-        setProductToEdite(product)
+        setProductToEdite({...product})
+        setProductToEditeINDX(index)
         openEditeModal()
+        console.log("Selected product:", product);
         
       }
   return (

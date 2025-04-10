@@ -46,8 +46,9 @@ function App() {
   });
   const [selected, setSelected] = useState(catogry[0])
   const [ProductToEdite , setProductToEdite] = useState<IProduct>(dataObject) 
+  const [ProductToEditeINDX , setProductToEditeINDX] = useState<number>(0) 
   const [temp, setTemp] = useState<string[]>([]); //**Todo store date in aray ---> tecnec store prev data */
-  console.log(temp);
+ 
 
   //**TODO */ _____________ Modal handler _____________
   //! functions add product modal  
@@ -133,10 +134,22 @@ function App() {
       return;
     }
 
-    console.log(product);
+    //! concept UPDATED product  
+   
+    const updatedProducts = [...products];
+    updatedProducts[ProductToEditeINDX] = ProductToEdite
+    setProducts(updatedProducts);
 
-    setProduct(dataObject);
-    closeEditeModal() //!XXXXXX
+    console.log("ProductToEditeINDX",ProductToEditeINDX);
+    console.log("ProductToEdite",ProductToEdite);
+    
+    
+
+    
+
+    setProductToEdite(dataObject);
+    setTemp([]);
+    closeEditeModal() 
     
   }
 
@@ -159,8 +172,15 @@ function App() {
 
   //**TODO */ _____________ rendering _____________
 
-  const renderProductList = products.map((product) => {
-    return <ProductCard key={product.id} product={product} setProductToEdite={setProductToEdite} openEditeModal={openEditeModal} />;
+  const renderProductList = products.map((product , index) => {
+    return <ProductCard 
+    key={product.id}
+    product={product}
+    setProductToEdite={setProductToEdite}
+    openEditeModal={openEditeModal}
+    setProductToEditeINDX={setProductToEditeINDX}
+    index={index}
+     />;
   });
   const renderFormInput = inputeModel.map((inpute) => {
     return (
@@ -202,13 +222,14 @@ function App() {
             
           </label>
           <FormInpute
+            key={ProductToEdite.id}
             id={id}
             name={name}
             type={"text"}
             value={ProductToEdite[name]}
             onChange={onchangEditeehandler}
           />
-          {<Errors MSG={""} />}
+         {formErrors[name] && <Errors MSG={formErrors[name]} />} 
       </div> 
     )
 

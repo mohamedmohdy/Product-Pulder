@@ -18,8 +18,13 @@ export const productValidation = (IProduct: {title: string ; description: string
     if(!IProduct.imgurl.trim()  || !regularImage){
         errors.imgurl = "imgurl is required and should be a valid URL"
     }
-    if(!IProduct.price.trim() || isNaN(Number(IProduct.price)) || Number(IProduct.price) <= 0){
-        errors.price = "price is required and should be a positive number"
+    const price = parseFloat(IProduct.price.replace('$', '').trim()); // إزالة الـ "$" إذا كانت موجودة وتحويلها إلى رقم
+    //!  لازم تفهم الكود دا لسا مكتبتوش عندي  
+    if (!IProduct.price.trim() || isNaN(price) || price <= 0) {
+        // لو السعر فاضي او مش رقم او لو اقل من الصفر 
+        errors.price = "Price is required and should be a valid positive number.";
+    } else {
+        IProduct.price = `$${price}`; // إضافة الـ "$" بعد الرقم
     }
 
 
