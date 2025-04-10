@@ -137,7 +137,7 @@ function App() {
     //! concept UPDATED product  
    
     const updatedProducts = [...products];
-    updatedProducts[ProductToEditeINDX] = ProductToEdite
+    updatedProducts[ProductToEditeINDX] = {...ProductToEdite , colors: temp.concat(ProductToEdite.colors)} ;
     setProducts(updatedProducts);
 
     console.log("ProductToEditeINDX",ProductToEditeINDX);
@@ -203,11 +203,20 @@ function App() {
       color={colors}
       key={colors}
       onClick={() => {
+      
         if (temp.includes(colors)) {
           setTemp((prev) => prev.filter((item) => item !== colors)); //**TODO DELET COLOR IN TEMP */
+          
+          return;
+        }
+        if (ProductToEdite.colors.includes(colors)) {
+          setTemp((prev) => prev.filter((item) => item !== colors)); //**TODO DELET COLOR IN TEMP */
+          
           return;
         }
         setTemp((prev) => [...prev, colors]); //**todo state can return functions */
+        console.log(temp);
+        
       }}
     />
   ));
@@ -296,11 +305,11 @@ function App() {
             {ReenderPeoductEditeWithError("description" , "description" , "product description")}
             {ReenderPeoductEditeWithError("imgurl" , "imgurl" , "img url")}
             {ReenderPeoductEditeWithError("price" , "price" , "product price")}
-            {/* {renderFormInput}
-            <SelectMenu selected={selected }  setSelected={setSelected } />
+            
+            {/* <SelectMenu selected={selected }  setSelected={setSelected } /> */}
             <div className="flex  space-x-3 pb-2">{renderColors}</div>
             <div className="flex flex-wrap ">
-              {temp.map((colors) => (
+              {temp.concat(ProductToEdite.colors).map((colors) => (
                 <span
                   className=" space-x-1 mr-2 p-1 m-1  rounded-md"
                   key={colors}
@@ -308,7 +317,8 @@ function App() {
                 >
                   {colors}
                 </span>
-              ))} */}
+              ))}
+            </div>
             
 
             <Button
